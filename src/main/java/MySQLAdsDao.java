@@ -43,7 +43,16 @@ public class MySQLAdsDao implements Ads{
 
     @Override
     public Long insert(Ad ad) {
-        String query = "INSERT INTO adlister_db.ads (id, user_id, title) VALUES ('" + ad.getId() + "')"
-        return null;
+        String query = "INSERT INTO adlister_db.ads (user_id, title, description) VALUES (" + ad.getUserId() + ",'" + ad.getTitle() + "', '" + ad.getDescription() + "')";
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            long key = rs.getLong(1);
+            return key;
+        } catch (SQLException e){
+            throw new RuntimeException("error connecting to db", e);
+        }
     }
 }
