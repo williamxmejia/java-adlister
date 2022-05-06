@@ -1,6 +1,8 @@
 package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.dao.MySQLUsersDao;
+import com.codeup.adlister.dao.Users;
 import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
@@ -18,6 +20,9 @@ public class RegisterServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        Users users = DaoFactory.getUsersDao();
+
         // TODO: ensure the submitted information is valid
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -26,12 +31,26 @@ public class RegisterServlet extends HttpServlet {
         //TODO : Ensure that only new usernames are registered
 
         boolean emailDoesntExist = false;
+        boolean userNameDoesntExist = false;
         boolean fieldsNotNull = false;
         boolean fieldsNotEmpty = false;
+
+        //TODO: ensure that only new usernames are registered
+
+        User existingUser = users.findByUsername(username);
+        if(existingUser == null){
+            response.sendRedirect("/login?errors");
+            return;
+        }
+
+
         // no null fields
         if(username != null && email != null && password != null){
             fieldsNotNull = true;
         }
+
+
+
 
         //no empty fields
         if(!username.isEmpty() && !email.isEmpty() && !password.isEmpty()){
@@ -46,9 +65,6 @@ public class RegisterServlet extends HttpServlet {
                     password
             );
             DaoFactory.getUsersDao().insert(user);
-            System.out.println(user.getUsername());
-            System.out.println(user.getEmail());
-            System.out.println(user.getPassword());
         }
 
 

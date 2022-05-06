@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
         // TODO: make sure we find a user with that username
         if(userInDB == null){
-            response.sendRedirect("/login");
+            response.sendRedirect("/login?errors");
             return;
         }
 
