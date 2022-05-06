@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface Users {
     User findByUsername(String username);
+
+    List<User> all();
+
     Long insert(User user);
 }
