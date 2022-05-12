@@ -5,6 +5,7 @@ public class Ad {
     private long userId;
     private String title;
     private String description;
+    private String priceInCents;
 
     public Ad(long id, long userId, String title, String description) {
         this.id = id;
@@ -17,6 +18,21 @@ public class Ad {
         this.userId = userId;
         this.title = title;
         this.description = description;
+    }
+
+    public Ad(long userId, String title, String description, String priceInCents) {
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.priceInCents = priceInCents;
+    }
+
+    public Ad(long id, long userId, String title, String description, String priceInCents) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.priceInCents = priceInCents;
     }
 
     public long getId() {
@@ -49,5 +65,13 @@ public class Ad {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPriceInCents() {
+        return priceInCents;
+    }
+
+    public void setPriceInCents(String priceInCents) {
+        this.priceInCents = priceInCents;
     }
 }
